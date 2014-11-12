@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE taskManager SYSTEM "task.dtd">
+<?xml-stylesheet type="text/xsl" href="tasksSVG.xsl"?>
+<taskManager>
+    <tasks>
+        <task id="task_0">
+            <status value="IN_PROGRESS"/>
+            <description>Create a task manager</description>
+            <assignedTo resource="res_1"/>
+            <progress value="80"/>
+            <comments>
+                <comment from="res_1">Started to work on this ! :D</comment>
+            </comments>
+            <place loc="loc_2"/>
+            <duration hour="200"/>
+        </task>
+        <task id="task_1">
+            <status value="COMPLETED"/>
+            <description>Create XML Schema</description>
+            <assignedTo resource="res_1"/>
+            <progress value="80"/>
+            <place loc="loc_2"/>
+            <priority value="HIGH"/>
+        </task>
+        <task id="task_2">
+            <status value="IN_PROGRESS"/>
+            <description>Create DTD</description>
+            <assignedTo resource="res_2"/>
+            <progress value="0"/>
+            <comments>
+                <comment from="res_1">Started to work on this ! :D</comment>
+            </comments>
+            <place loc="loc_2"/>
+        </task>
+        <task id="task_3">
+            <status value="NOT_STARTED"/>
+            <description>Create DOC for Mr. Zyssman</description>
+            <assignedTo resource="res_2"/>
+            <progress value="0"/>
+        </task>
+    </tasks>
+    <events>
+        <event>
+            <from task="task_0"/>
+            <to task="task_2"/>
+            <operande>
+                <value>COMPLETED</value>
+            </operande>
+            <operande>
+                <taskValue task="task_1" element="status"/>
+            </operande>
+            <operator name="EQUAL"/>
+            <operande>
+                <value>70</value>
+            </operande>
+            <operande>
+                <taskValue task="task_1" element="progress"/>
+            </operande>
+            <operator name="BIGGER_THAN"/>
+            <operator name="OR"/>
+        </event>
+        <event>
+            <from task="task_1"/>
+            <to task="task_2 task_3"/>
+            <operande>
+                <value>2014-10-20</value>
+            </operande>
+            <operande>
+                <now/>
+            </operande>
+            <operator name="BIGGER_THAN"/>
+        </event>
+        <event>
+            <from task="task_0"/>
+            <to task="task_3"/>
+            <operande>
+                <value>2014-10-20</value>
+            </operande>
+            <operande>
+                <now/>
+            </operande>
+            <operator name="BIGGER_THAN"/>
+        </event>
+    </events>
+    <resources>
+        <person firstName="Florian" lastName="Zysset" birthday="1990-12-02" id="res_1">
+            Florian Zysset travaille à Infoteam etc...etc...
+        </person>
+        <person firstName="Leeroy" lastName="Brun" birthday="1992-02-19" id="res_2"/>
+    </resources>
+    <locations>
+        <location name="Cuisine" id="loc_1"/>
+        <location name="HEIG-VD" id="loc_2"/>
+        <location name="Home" id="loc_3"/>
+    </locations>
+    <ui>
+        <rectangle task="task_0">
+            <position x="500" y="20"/>
+            <size height="100" width="270"/>
+        </rectangle>
+        <circle task="task_1" radius="70">
+            <position x="700" y="500"/>
+        </circle>
+        <rectangle task="task_2">
+            <position x="300" y="700"/>
+            <size height="100" width="200"/>
+        </rectangle>
+        <rectangle task="task_3">
+            <position x="1100" y="150"/>
+            <size height="80" width="350"/>
+        </rectangle>
+    </ui>
+</taskManager>
