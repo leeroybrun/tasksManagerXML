@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE taskManager SYSTEM "task.dtd">
-<?xml-stylesheet type="text/xsl" href="tasksDetails.xsl"?>
+<?xml-stylesheet type="text/xsl" href="taskDetails.xsl"?>
 <taskManager>
     <tasks>
         <task id="task_0">
