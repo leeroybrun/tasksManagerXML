@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:template match="/">
-		<html><head><link rel="stylesheet" href="taskDetails.css"/></head><body style="font-family:Verdana; font-size:10pt; color:black">
-			<xsl:apply-templates />
- 		</body></html>
-	</xsl:template>
 
 	<xsl:variable name="taskId">task_1</xsl:variable>
+
+	<xsl:template match="/">
+		<html><head><link rel="stylesheet" href="tasks.css"/></head><body>
+			<div class="wrapper">
+				<xsl:apply-templates />
+			</div>
+ 		</body></html>
+	</xsl:template>
 
 	<!-- Est-ce correct ? Devrais-je faire autrement ? -->
 	<xsl:template match="//tasks/task[@id != $taskId]"></xsl:template>
@@ -24,7 +27,7 @@
 					</xsl:attribute>
 				</div>
 			</div>
-			<div style="float:left;margin-left:10px;"><xsl:value-of select="./progress/@value"/> %</div>
+			<div class="progress-value"><xsl:value-of select="./progress/@value"/> %</div>
 		</p>
 		<p style="clear:both;overflow:hidden;">Place: <xsl:value-of select="//locations/location[@id = current()/place/@loc]/@name"/></p>
 		<p>Duration: 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<xsl:output method="xml" indent="yes" standalone="no" doctype-public="-//W3C//DTD SVG 1.1//EN"
+      doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"
+      media-type="image/svg" />
 	<xsl:template match="/">
-		<html><head></head><body style="font-family:Verdana; font-size:10pt; color:black">
 			<!-- Nouveau SVG -->
-			<svg xmlns="http://www.w3.org/2000/svg" height="1500" width="1500" style="border-style:solid;border-width:1px;">
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="1500" width="1500" style="border-style:solid;border-width:1px;">
 				<!-- On défini un marker en forme de triangle, pour les flèches des lignes -->
 				<defs>
 			        <marker id="Triangle"
@@ -21,7 +23,6 @@
 				<!-- Message affiché dans le cas où le navigateur ne supporte pas le SVG inline -->
 				Sorry, your browser does not support inline SVG.
 			</svg>
- 		</body></html>
 	</xsl:template>
 
 	<!-- Template pour les éléments de l'interface -->
@@ -40,15 +41,18 @@
 						<xsl:value-of select="./@radius"/>
 					</xsl:attribute>
 				</circle>
-				<text x="0" y="10" font-family="Verdana" font-size="20" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
-					<xsl:attribute name="x">
-						<xsl:value-of select="./position/@x"/>
-					</xsl:attribute>
-					<xsl:attribute name="y">
-						<xsl:value-of select="./position/@y"/>
-					</xsl:attribute>
-					<xsl:value-of select="$taskNode/description"/>
-				</text>
+				<a>
+					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
+					<text x="0" y="10" font-family="Verdana" font-size="20" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
+						<xsl:attribute name="x">
+							<xsl:value-of select="./position/@x"/>
+						</xsl:attribute>
+						<xsl:attribute name="y">
+							<xsl:value-of select="./position/@y"/>
+						</xsl:attribute>
+						<xsl:value-of select="$taskNode/description"/>
+					</text>
+				</a>
 			</xsl:when>
 			<xsl:when test="name(.) = 'rectangle'">
 				<rect x="50" y="20" rx="10" ry="10" width="300" height="100" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)">
@@ -65,15 +69,18 @@
 						<xsl:value-of select="./size/@height"/>
 					</xsl:attribute>
 				</rect>
-				<text x="0" y="10" font-family="Verdana" font-size="20" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
-					<xsl:attribute name="x">
-						<xsl:value-of select="./position/@x + (./size/@width div 2)"/>
-					</xsl:attribute>
-					<xsl:attribute name="y">
-						<xsl:value-of select="./position/@y + (./size/@height div 2)"/>
-					</xsl:attribute>
-					<xsl:value-of select="$taskNode/description"/>
-				</text>
+				<a>
+					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
+					<text x="0" y="10" font-family="Verdana" font-size="20" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
+						<xsl:attribute name="x">
+							<xsl:value-of select="./position/@x + (./size/@width div 2)"/>
+						</xsl:attribute>
+						<xsl:attribute name="y">
+							<xsl:value-of select="./position/@y + (./size/@height div 2)"/>
+						</xsl:attribute>
+						<xsl:value-of select="$taskNode/description"/>
+					</text>
+				</a>
 			</xsl:when>
 			<xsl:otherwise></xsl:otherwise>
 		</xsl:choose>

@@ -1,3 +1,33 @@
+html {
+	height:100%;
+	min-height: 100%;
+}
+
+body {
+	font-family:Verdana;
+	font-size:13px;
+	color:black;
+	background-color:#E5E5E5;
+	padding:0;
+	margin:0;
+	height:100%;
+	min-height: 100%;
+}
+
+.wrapper {
+	width:1100px;
+	padding:30px;
+	margin:0 auto;
+	background-color:#ffffff;
+	height:100%;
+	min-height: 100%;
+}
+
+h1 {
+	font-size:22px;
+	font-weight:normal;
+}
+
 .progress-title {
 	float:left;
 	margin-right:10px;
@@ -6,9 +36,8 @@
 .progress-bar-wrapper {
 	float:left; 
 	padding:3px; 
-	background-color:#fefefe; 
 
-	height:28px; 
+	height:22px; 
 	width:108px;
 
 	-webkit-box-sizing: border-box;
@@ -28,7 +57,7 @@
 }
 
 .progress-bar {
-	height:18px;
+	height:12px;
 	float:left;
 
 	border:1px solid #2dc46c;
@@ -41,4 +70,53 @@
 	background: -ms-linear-gradient(top,  #31d675 0%,#31d675 40%,#2dc46c 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #31d675 0%,#31d675 40%,#2dc46c 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#31d675', endColorstr='#2dc46c',GradientType=0 ); /* IE6-9 */
+}
+
+.progress-value {
+	float:left;
+	margin-left:10px;
+}
+
+/* Tasks list table */
+a.showGraph {
+	float:right;
+}
+
+.tasks-list, .tasks-list td, .tasks-list th {
+	border-collapse: collapse;
+	border:1px solid #cccccc;
+	font-size:13px;
+}
+
+.tasks-list th {
+	padding:8px 12px;
+	background-color: #E5E5E5;
+}
+
+.tasks-list th.description {
+	width:270px;
+}
+
+.tasks-list th.resource {
+	width:120px;
+}
+
+.tasks-list th.progress {
+	width:170px;
+}
+
+.tasks-list th.place {
+	width:120px;
+}
+
+.tasks-list th.duration {
+	width:120px;
+}
+
+.tasks-list th.status {
+	width:120px;
+}
+
+.tasks-list td {
+	padding:6px 10px;
 }
