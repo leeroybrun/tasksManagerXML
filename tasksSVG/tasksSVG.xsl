@@ -42,7 +42,7 @@
 					</xsl:attribute>
 				</circle>
 				<a>
-					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
+					<xsl:attribute name="xlink:href">../taskDetails/taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
 					<text x="0" y="10" font-family="Verdana" font-size="17" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 						<xsl:attribute name="x">
 							<xsl:value-of select="./position/@x"/>
@@ -70,7 +70,7 @@
 					</xsl:attribute>
 				</rect>
 				<a>
-					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
+					<xsl:attribute name="xlink:href">../taskDetails/taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
 					<text x="0" y="10" font-family="Verdana" font-size="17" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 						<xsl:attribute name="x">
 							<xsl:value-of select="./position/@x + (./size/@width div 2)"/>

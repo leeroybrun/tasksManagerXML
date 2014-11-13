@@ -4,7 +4,7 @@
 	<xsl:variable name="taskId">task_1</xsl:variable>
 
 	<xsl:template match="/">
-		<html><head><link rel="stylesheet" href="tasks.css"/></head><body>
+		<html><head><link rel="stylesheet" href="../tasks.css"/></head><body>
 			<div class="wrapper">
 				<xsl:apply-templates />
 			</div>
@@ -17,7 +17,14 @@
 	<xsl:template match="//tasks/task[@id = $taskId]">
 
 		<h1><xsl:value-of select="./description"/></h1>
-		<p>Assigned to : <xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@firstName"/></p>
+		<p>Assigned to : 
+			<a>
+				<xsl:attribute name="href">../personTasks/personTasks.html?personId=<xsl:value-of select="./assignedTo/@resource"/></xsl:attribute>
+				<xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@firstName"/>
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@lastName"/>
+			</a>
+		</p>
 		<p style="overflow:hidden;">
 			<div class="progress-title">Progress:</div>
 			<div class="progress-bar-wrapper">

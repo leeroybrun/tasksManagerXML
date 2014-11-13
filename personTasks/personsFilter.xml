@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<!DOCTYPE taskManager SYSTEM "task.dtd">
-<?xml-stylesheet type="text/xsl" href="tasksSVG.xsl"?>
+<!DOCTYPE taskManager SYSTEM "../task.dtd">
+<?xml-stylesheet type="text/xsl" href="personsFilter.xsl"?>
 <taskManager>
     <tasks>
         <task id="task_0">
@@ -41,43 +41,41 @@
     </tasks>
     <events>
         <event>
-            <from task="task_0"/>
+            <from task="task_1"/>
             <to task="task_2"/>
-            <operande>
-                <value>COMPLETED</value>
-            </operande>
             <operande>
                 <taskValue task="task_1" element="status"/>
             </operande>
+            <operande>
+                <value>COMPLETED</value>
+            </operande>
             <operator name="EQUAL"/>
             <operande>
-                <value>70</value>
+                <taskValue task="task_1" element="progress"/>
             </operande>
             <operande>
-                <taskValue task="task_1" element="progress"/>
+                <value>70</value>
             </operande>
             <operator name="BIGGER_THAN"/>
             <operator name="OR"/>
         </event>
         <event>
-            <from task="task_1"/>
-            <to task="task_2 task_3"/>
-            <operande>
-                <value>2014-10-20</value>
-            </operande>
+            <to task="task_0 task_1 task_2"/>
             <operande>
                 <now/>
+            </operande>
+            <operande>
+                <value>2014-10-20</value>
             </operande>
             <operator name="BIGGER_THAN"/>
         </event>
         <event>
             <from task="task_0"/>
-            <to task="task_3"/>
-            <operande>
-                <value>2014-10-20</value>
-            </operande>
             <operande>
                 <now/>
+            </operande>
+            <operande>
+                <value>2014-10-20</value>
             </operande>
             <operator name="BIGGER_THAN"/>
         </event>
@@ -94,20 +92,12 @@
         <location name="Home" id="loc_3"/>
     </locations>
     <ui>
-        <rectangle task="task_0">
-            <position x="500" y="20"/>
-            <size height="100" width="270"/>
+        <rectangle task="task_1">
+            <position x="1" y="2"/>
+            <size height="200" width="200"/>
         </rectangle>
-        <circle task="task_1" radius="70">
-            <position x="700" y="500"/>
+        <circle task="task_2" radius="200">
+            <position x="1" y="2"/>
         </circle>
-        <rectangle task="task_2">
-            <position x="300" y="700"/>
-            <size height="100" width="200"/>
-        </rectangle>
-        <rectangle task="task_3">
-            <position x="1100" y="150"/>
-            <size height="80" width="350"/>
-        </rectangle>
     </ui>
 </taskManager>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:template match="/">
-		<html><head><link rel="stylesheet" href="tasks.css" /></head><body>
+		<html><head><link rel="stylesheet" href="../tasks.css" /></head><body>
 			<div class="wrapper">
 				<xsl:apply-templates />
 			</div>
@@ -9,7 +9,6 @@
 	</xsl:template>
 
 	<xsl:template match="tasks">
-		<a class="showGraph" href="tasksSVG.xml">Voir le graphique des tâches</a>
 		<h1>Tasks</h1>
 		<TABLE class="tasks-list" cellspacing="0" cellpadding="0">
 			<TR class="heading">
@@ -24,15 +23,24 @@
 			<xsl:apply-templates />
 
 		</TABLE>
+		<p><a href="../tasksSVG/tasksSVG.xml">Voir le diagramme des tâches</a></p>
+		<p><a href="../personTasks/personTasks.html">Voir les tâches assignées à une personne</a></p>
 	</xsl:template>
 
 	<xsl:template match="task">
 		<xsl:element name="TR">
 			<TD><a>
-				<xsl:attribute name="href">taskDetails.html?taskId=<xsl:value-of select="./@id"/></xsl:attribute>
+				<xsl:attribute name="href">../taskDetails/taskDetails.html?taskId=<xsl:value-of select="./@id"/></xsl:attribute>
 				<xsl:value-of select="./description"/>
 			</a></TD>
-			<TD><xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@firstName"/></TD>
+			<TD>
+				<a>
+					<xsl:attribute name="href">../personTasks/personTasks.html?personId=<xsl:value-of select="./assignedTo/@resource"/></xsl:attribute>
+					<xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@firstName"/>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@lastName"/>
+				</a>
+			</TD>
 			<TD style="width:140px">
 				<div class="progress-bar-wrapper">
 					<div class="progress-bar">
