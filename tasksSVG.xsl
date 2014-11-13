@@ -43,7 +43,7 @@
 				</circle>
 				<a>
 					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
-					<text x="0" y="10" font-family="Verdana" font-size="20" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
+					<text x="0" y="10" font-family="Verdana" font-size="17" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 						<xsl:attribute name="x">
 							<xsl:value-of select="./position/@x"/>
 						</xsl:attribute>
@@ -71,7 +71,7 @@
 				</rect>
 				<a>
 					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
-					<text x="0" y="10" font-family="Verdana" font-size="20" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
+					<text x="0" y="10" font-family="Verdana" font-size="17" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 						<xsl:attribute name="x">
 							<xsl:value-of select="./position/@x + (./size/@width div 2)"/>
 						</xsl:attribute>
@@ -198,7 +198,7 @@
 		<xsl:variable name="prefixedList" select="$eventNode/*[name() = 'operande' or name()='operator']" />
 
 		<!-- On crée un élément <text> pour afficher la condition de l'événement (expression postfixée transformée en infixée) -->
-		<text x="0" y="10" font-family="Verdana" font-size="15" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
+		<text x="0" y="10" font-family="Verdana" font-size="13" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 			<!-- Positionne l'élément texte au milieu de la ligne de liaison -->
 			<xsl:attribute name="x">
 				<xsl:value-of select="($fromTaskUI/position/@x + $toTaskUI/position/@x) div 2"/>
