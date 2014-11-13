@@ -1,5 +1,4 @@
 Questions :
 
 	- Doit tourner sur tous les navigateurs ?
-	- Voir pourquoi SVG affiche mal sur Mozilla (voir la source HTML !)
 	- Voir si la façon de faire pour afficher le détail de la tâche est optimal
