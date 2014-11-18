@@ -11,9 +11,6 @@
 		</body></html>
 	</xsl:template>
 
-	<!-- Est-ce correct ? Devrais-je faire autrement ? -->
-	<xsl:template match="//tasks/task[@id != $taskId]"></xsl:template>
-
 	<xsl:template match="//tasks/task[@id = $taskId]">
 
 		<h1><xsl:value-of select="./description"/></h1>
