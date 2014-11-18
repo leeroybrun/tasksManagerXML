@@ -46,15 +46,19 @@
 				}				
 			}
 
+			// Variables globales
+			var xml, personsFilterXsl, tasksListXsl;
+
 			// Fonction appelée au chargement de la page
 			//   - Charge la liste de personnes
 			//   - Récupère éventuellement un paramètre "personId" passé dans l'URL
 			//   - Défini l'événement sur la liste de personnes pour charger la liste lorsqu'on change la personne sélectionnée
 	 		function displayPersons(){
-				xml = loadXML("personsFilter.xml");
-				xsl = loadXML("personsFilter.xsl");
+				xml = loadXML("tasks.xml");
+				personsFilterXsl = loadXML("personsFilter.xsl");
+				tasksListXsl = loadXML("tasksList.xsl");
 
-				transformXmlXslIntoNode(xml, xsl, 'personsFilterWrapper');
+				transformXmlXslIntoNode(xml, personsFilterXsl, 'personsFilterWrapper');
 
 				// Est-ce qu'on a un personId en paramètre de l'URL ?
 				var personId = getParameterByName('personId') || null;
@@ -72,14 +76,11 @@
 
 			// Fonction appelée lorsqu'on veut charger les taches d'une personne
 	 		function displayPersonTasks(personId){
-				xml = loadXML("tasksList.xml");
-				xsl = loadXML("tasksList.xsl");
-
 				var found = false;
 
 				// Parcours l'arborescence des enfants du noeud principal pour trouver l'emplacement de la variable
-				for (var i = 0; i < xsl.documentElement.childNodes.length && !found; i++) {
-					var node = xsl.documentElement.childNodes[i];
+				for (var i = 0; i < tasksListXsl.documentElement.childNodes.length && !found; i++) {
+					var node = tasksListXsl.documentElement.childNodes[i];
 
 					// Dès qu'on trouve la variable, on la modifie et on arrête la boucle
 					if(node.nodeName == 'xsl:variable' && node.getAttribute('name') == 'personId') {
@@ -89,7 +90,7 @@
 				}
 
 				// Transforme le XML avec le XSL et le place dans le div #listeTaches
-				transformXmlXslIntoNode(xml, xsl, 'tasksList');
+				transformXmlXslIntoNode(xml, tasksListXsl, 'tasksList');
 			}
 		</script>
 	</head>
