@@ -2,7 +2,7 @@
 	<head>
 		<link rel="stylesheet" href="../tasks.css" />
 	   	<script language="javascript">
-	   		function loadXMLDoc(filename){
+			function loadXML(filename){
 				if (window.ActiveXObject){
 	  				xhttp = new ActiveXObject("Msxml2.XMLHTTP");
 	  			} else  {
@@ -23,20 +23,27 @@
 
 			// Transforme le XML avec le XSL et le place dans l'élément du dom ayant pour ID "nodeId"
 			function transformXmlXslIntoNode(xml, xsl, nodeId) {
-				document.getElementById(nodeId).innerHTML = '';
-				
-				// code for IE
-				if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
-	  				ex = xml.transformNode(xsl);
-	  				document.getElementById(nodeId).innerHTML = ex;
-	  			}
-				// code for Chrome, Firefox, Opera, etc.
-				else if (document.implementation && document.implementation.createDocument) {
-	  				xsltProcessor = new XSLTProcessor();
-	  				xsltProcessor.importStylesheet(xsl);
-	  				resultDocument = xsltProcessor.transformToFragment(xml, document);
-	  				document.getElementById(nodeId).appendChild(resultDocument);
-	  			}
+				var containerNode = document.getElementById(nodeId);
+				containerNode.innerHTML = '';
+
+				try {
+					// code for Chrome, Firefox, Opera, etc.
+					if (window.XSLTProcessor) {
+		  				xsltProcessor = new XSLTProcessor();
+		  				xsltProcessor.importStylesheet(xsl);
+		  				resultDocument = xsltProcessor.transformToFragment(xml, document);
+
+		  				containerNode.appendChild(resultDocument);
+		  			}
+					// code for IE
+					else if (window.ActiveXObject) {
+		  				ex = xml.transformNode(xsl);
+
+		  				containerNode.innerHTML = ex;
+		  			}
+				} catch(e) {
+					return e;
+				}				
 			}
 
 			// Fonction appelée au chargement de la page
@@ -44,8 +51,8 @@
 			//   - Récupère éventuellement un paramètre "personId" passé dans l'URL
 			//   - Défini l'événement sur la liste de personnes pour charger la liste lorsqu'on change la personne sélectionnée
 	 		function displayPersons(){
-				xml = loadXMLDoc("personsFilter.xml");
-				xsl = loadXMLDoc("personsFilter.xsl");
+				xml = loadXML("personsFilter.xml");
+				xsl = loadXML("personsFilter.xsl");
 
 				transformXmlXslIntoNode(xml, xsl, 'personsFilterWrapper');
 
@@ -65,8 +72,8 @@
 
 			// Fonction appelée lorsqu'on veut charger les taches d'une personne
 	 		function displayPersonTasks(personId){
-				xml = loadXMLDoc("tasksList.xml");
-				xsl = loadXMLDoc("tasksList.xsl");
+				xml = loadXML("tasksList.xml");
+				xsl = loadXML("tasksList.xsl");
 
 				var found = false;
 
