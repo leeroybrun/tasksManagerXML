@@ -29,9 +29,24 @@
 	<!-- Template pour les éléments de l'interface -->
 	<xsl:template match="ui/*">
 		<xsl:variable name="taskNode" select="//task[@id = current()/@task]" />
+		<xsl:variable name="taskStatus" select="$taskNode/status/@value" />
+		<xsl:variable name="taskColor" >
+			<xsl:if test="($taskStatus='IN_PROGRESS')">
+					#66CC99
+			</xsl:if>
+			<xsl:if test="($taskStatus='COMPLETED')">
+				#26A65B
+			</xsl:if>
+			<xsl:if test="($taskStatus='NOT_STARTED')">
+				#D35400
+			</xsl:if>
+		</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="name(.) = 'circle'">
 				<circle cx="50" cy="50" r="40" stroke="black" stroke-width="1" fill="white">
+					<xsl:attribute name="fill">
+						<xsl:value-of select="$taskColor" />
+					</xsl:attribute>
 					<xsl:attribute name="cx">
 						<xsl:value-of select="./position/@x"/>
 					</xsl:attribute>
@@ -43,7 +58,7 @@
 					</xsl:attribute>
 				</circle>
 				<a>
-					<xsl:attribute name="xlink:href">../taskDetails/taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
+					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
 					<text x="0" y="10" font-family="Verdana" font-size="17" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 						<xsl:attribute name="x">
 							<xsl:value-of select="./position/@x"/>
@@ -56,7 +71,10 @@
 				</a>
 			</xsl:when>
 			<xsl:when test="name(.) = 'rectangle'">
-				<rect x="50" y="20" rx="10" ry="10" width="300" height="100" style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(0,0,0)">
+				<rect x="50" y="20" rx="10" ry="10" width="300" height="100" style="stroke-width:1;stroke:rgb(0,0,0)">
+					<xsl:attribute name="fill">
+						<xsl:value-of select="$taskColor" />
+					</xsl:attribute>
 					<xsl:attribute name="x">
 						<xsl:value-of select="./position/@x"/>
 					</xsl:attribute>
@@ -71,7 +89,7 @@
 					</xsl:attribute>
 				</rect>
 				<a>
-					<xsl:attribute name="xlink:href">../taskDetails/taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
+					<xsl:attribute name="xlink:href">taskDetails.html?taskId=<xsl:value-of select="$taskNode/@id"/></xsl:attribute>
 					<text x="0" y="10" font-family="Verdana" font-size="17" fill="black" text-anchor="middle" style="dominant-baseline: middle;" >
 						<xsl:attribute name="x">
 							<xsl:value-of select="./position/@x + (./size/@width div 2)"/>
@@ -179,21 +197,88 @@
 
 		<!-- TODO: si une des tâches n'existe pas dans l'UI, ne pas créer de lien ? -->
 
+		<xsl:variable name="leftTaskX">
+			<xsl:choose>
+				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0">
+					<!-- La tâche "to" est la plus à gauche -->
+					<xsl:value-of select="($toTaskUI/position/@x + $toTaskUI/size/@width)"/>
+				</xsl:when>
+				<xsl:otherwise>
+						<xsl:value-of select="($fromTaskUI/position/@x + $fromTaskUI/size/@width)"/>
+					</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+
+		<xsl:variable name="rightTaskX">
+			<xsl:choose>
+				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0">
+					<!-- La tâche "to" est la plus à droite -->
+							<xsl:value-of select="$fromTaskUI/position/@x"/>
+				</xsl:when>
+				<xsl:otherwise>
+						<xsl:value-of select="$toTaskUI/position/@x"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<xsl:variable name="leftTaskY">
+			<xsl:choose>
+				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
+				<!-- La tâche "to" est la plus à gauche et la task TO est plus haut, donc prendre y + height de TO-->
+					<xsl:value-of select="($toTaskUI/position/@y + $toTaskUI/size/@height)"/>
+				</xsl:when>
+				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) &lt; 0">
+				<!-- La tâche "to" est la plus à gauche et la task FROM est plus haut, donc prendre y -->
+					<xsl:value-of select="($toTaskUI/position/@y)"/>
+				</xsl:when>
+				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) &lt; 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
+				<!-- La tâche "from" est la plus à gauche et la task TO est plus basse, donc prendre y + heigth de from-->
+					<xsl:value-of select="($fromTaskUI/position/@y )"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="($fromTaskUI/position/@y + $fromTaskUI/size/@height)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+
+		<xsl:variable name="rightTaskY">
+			<xsl:choose>
+			<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
+			<!-- La tâche "to" est la plus à gauche et la task TO est plus haut, donc prendre y + height de FROM-->
+				<xsl:value-of select="($fromTaskUI/position/@y)"/>
+			</xsl:when>
+			<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) &lt; 0">
+			<!-- La tâche "to" est la plus à gauche et la task FROM est plus haut, donc prendre y -->
+				<xsl:value-of select="($fromTaskUI/position/@y + $fromTaskUI/size/@height)"/>
+			</xsl:when>
+			<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) &lt; 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
+			<!-- La tâche "from" est la plus à gauche et la task TO est plus haut, donc prendre y + heigth de from-->
+				<xsl:value-of select="($toTaskUI/position/@y + $toTaskUI/size/@height)"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="($toTaskUI/position/@y)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+		</xsl:variable>
+
+
 		<!-- Créer un lien entre la tache "from" et la tache "to" -->
-		<line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(0,0,0);stroke-width:2" marker-end="url(#Triangle)">
-			<xsl:attribute name="x1">
-				<xsl:value-of select="$fromTaskUI/position/@x"/>
-			</xsl:attribute>
-			<xsl:attribute name="y1">
-				<xsl:value-of select="$fromTaskUI/position/@y"/>
-			</xsl:attribute>
-			<xsl:attribute name="x2">
-				<xsl:value-of select="$toTaskUI/position/@x"/>
-			</xsl:attribute>
-			<xsl:attribute name="y2">
-				<xsl:value-of select="$toTaskUI/position/@y"/>
-			</xsl:attribute>
-		</line>
+	<line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(0,0,0);stroke-width:2" marker-end="url(#Triangle)">
+		<xsl:attribute name="x1">
+			<xsl:value-of select="$leftTaskX"/>
+		</xsl:attribute>
+		<xsl:attribute name="y1">
+			<xsl:value-of select="$leftTaskY"/>
+		</xsl:attribute>
+		<xsl:attribute name="x2">
+			<xsl:value-of select="$rightTaskX"/>
+		</xsl:attribute>
+		<xsl:attribute name="y2">
+			<xsl:value-of select="$rightTaskY"/>
+		</xsl:attribute>
+	</line>
 
 		<!-- Récupère les noeuds <operande> et <operator> de l'événement pour parser l'expression postfixée -->
 		<xsl:variable name="prefixedList" select="$eventNode/*[name() = 'operande' or name()='operator']" />
