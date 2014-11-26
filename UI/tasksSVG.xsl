@@ -108,7 +108,6 @@
 	<!-- Template utilisé pour le traitement des événements (passage d'une tâche à une autre) -->
 	<xsl:template match="events/event">
 		<xsl:call-template name="outputTasksFromLinks">
-			<!-- Aircraft contains my metadata -->
 			<xsl:with-param name="fromList" select="./from/@task"></xsl:with-param>
 			<xsl:with-param name="toList" select="./to/@task"></xsl:with-param>
 			<xsl:with-param name="eventNode" select="."></xsl:with-param>
