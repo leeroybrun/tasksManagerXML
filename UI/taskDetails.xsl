@@ -2,11 +2,11 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:variable name="taskId">task_1</xsl:variable>
-	<xsl:variable name="taskManager" select="document('tasks.xml')/taskManager" />
+	
 	<xsl:template match="/">
 		<html><head><link rel="stylesheet" href="tasks.css" /></head><body>
 			<div class="wrapper">
-				<xsl:apply-templates select="$taskManager" />
+				<xsl:apply-templates />
 			</div>
 		</body></html>
 	</xsl:template>

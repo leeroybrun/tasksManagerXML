@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<xsl:output method="xml" indent="yes" standalone="no" doctype-public="-//W3C//DTD SVG 1.1//EN"
 			doctype-system="http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"
@@ -195,87 +195,100 @@
 		<xsl:variable name="toTaskUI" select="//ui/*[@task = $first]" />
 
 		<!-- TODO: si une des tâches n'existe pas dans l'UI, ne pas créer de lien ? -->
-
-		<xsl:variable name="leftTaskX">
+		<xsl:variable name="fromTaskX">
 			<xsl:choose>
 				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0">
-					<!-- La tâche "to" est la plus à gauche -->
-					<xsl:value-of select="($toTaskUI/position/@x + $toTaskUI/size/@width)"/>
+					<!-- La tâche "to" est plus à droite, donc le X de from est à droite -->
+					<xsl:value-of select="($fromTaskUI/position/@x)"/>
 				</xsl:when>
 				<xsl:otherwise>
-						<xsl:value-of select="($fromTaskUI/position/@x + $fromTaskUI/size/@width)"/>
-					</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-
-
-		<xsl:variable name="rightTaskX">
-			<xsl:choose>
-				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0">
-					<!-- La tâche "to" est la plus à droite -->
-							<xsl:value-of select="$fromTaskUI/position/@x"/>
-				</xsl:when>
-				<xsl:otherwise>
-						<xsl:value-of select="$toTaskUI/position/@x"/>
+					<!-- La tâche "to" est plus à droite, donc le X de from est droite + width -->
+						<xsl:choose>
+							<xsl:when test="string(number($fromTaskUI/size/@width)) = 'NaN'">
+								<xsl:value-of select="($fromTaskUI/position/@x )"/>
+							</xsl:when>
+							<xsl:otherwise>
+									<xsl:value-of select="($fromTaskUI/position/@x + $fromTaskUI/size/@width)" />
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 
-		<xsl:variable name="leftTaskY">
+		<xsl:variable name="toTaskX">
 			<xsl:choose>
-				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
-				<!-- La tâche "to" est la plus à gauche et la task TO est plus haut, donc prendre y + height de TO-->
-					<xsl:value-of select="($toTaskUI/position/@y + $toTaskUI/size/@height)"/>
-				</xsl:when>
-				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) &lt; 0">
-				<!-- La tâche "to" est la plus à gauche et la task FROM est plus haut, donc prendre y -->
-					<xsl:value-of select="($toTaskUI/position/@y)"/>
-				</xsl:when>
-				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) &lt; 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
-				<!-- La tâche "from" est la plus à gauche et la task TO est plus basse, donc prendre y + heigth de from-->
-					<xsl:value-of select="($fromTaskUI/position/@y )"/>
+				<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0">
+					<!-- La tâche "to" est plus à droite, donc le X de from est droite + width -->
+						<xsl:choose>
+							<xsl:when test="string(number($toTaskUI/size/@width)) = 'NaN'">
+								<xsl:value-of select="($toTaskUI/position/@x )"/>
+							</xsl:when>
+							<xsl:otherwise>
+									<xsl:value-of select="($toTaskUI/position/@x + $toTaskUI/size/@width)" />
+						</xsl:otherwise>
+					</xsl:choose>
+					<!-- La tâche "to" est plus à gauche, donc à droite de "TO" pour le lien-->
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="($fromTaskUI/position/@y + $fromTaskUI/size/@height)"/>
+					<!-- La tâche "to" est plus à droite, donc le X de TO est à droite-->
+					<xsl:value-of select="($toTaskUI/position/@x)"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 
-
-		<xsl:variable name="rightTaskY">
+		<xsl:variable name="fromTaskY">
 			<xsl:choose>
-			<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
-			<!-- La tâche "to" est la plus à gauche et la task TO est plus haut, donc prendre y + height de FROM-->
-				<xsl:value-of select="($fromTaskUI/position/@y)"/>
-			</xsl:when>
-			<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) >= 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) &lt; 0">
-			<!-- La tâche "to" est la plus à gauche et la task FROM est plus haut, donc prendre y -->
-				<xsl:value-of select="($fromTaskUI/position/@y + $fromTaskUI/size/@height)"/>
-			</xsl:when>
-			<xsl:when test="($fromTaskUI/position/@x - $toTaskUI/position/@x) &lt; 0 and ($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
-			<!-- La tâche "from" est la plus à gauche et la task TO est plus haut, donc prendre y + heigth de from-->
-				<xsl:value-of select="($toTaskUI/position/@y + $toTaskUI/size/@height)"/>
+				<xsl:when test="($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
+					<!-- La tâche "from" est plus basse que la tâche "TO", donc le Y de from est en bas -->
+					<xsl:value-of select="($fromTaskUI/position/@y)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<!-- La tâche "from" est plus basse que la tâche "TO", donc le Y de from est en haut -->
+					<xsl:choose>
+						<xsl:when test="string(number($fromTaskUI/size/@height)) = 'NaN'">
+								<xsl:value-of select="($fromTaskUI/position/@y)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="($fromTaskUI/position/@y + $fromTaskUI/size/@height)" />
+							</xsl:otherwise>
+					</xsl:choose>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+	<xsl:variable name="toTaskY">
+		<xsl:choose>
+			<xsl:when test="($fromTaskUI/position/@y - $toTaskUI/position/@y) >= 0">
+				<!-- La tâche "from" est plus basse que la tâche "to", donc le Y de to est en bas -->
+				<xsl:choose>
+					<xsl:when test="string(number($toTaskUI/size/@height)) = 'NaN'">
+							<xsl:value-of select="($toTaskUI/position/@y)"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="($toTaskUI/position/@y + $toTaskUI/size/@height)" />
+						</xsl:otherwise>
+				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
+				<!-- La tâche "from" est plus basse que la tâche "TO", donc le Y de from est en haut -->
 				<xsl:value-of select="($toTaskUI/position/@y)"/>
 			</xsl:otherwise>
 		</xsl:choose>
-		</xsl:variable>
-
+	</xsl:variable>
 
 		<!-- Créer un lien entre la tache "from" et la tache "to" -->
 	<line x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(0,0,0);stroke-width:2" marker-end="url(#Triangle)">
 		<xsl:attribute name="x1">
-			<xsl:value-of select="$leftTaskX"/>
+			<xsl:value-of select="$fromTaskX"/>
 		</xsl:attribute>
 		<xsl:attribute name="y1">
-			<xsl:value-of select="$leftTaskY"/>
+			<xsl:value-of select="$fromTaskY"/>
 		</xsl:attribute>
 		<xsl:attribute name="x2">
-			<xsl:value-of select="$rightTaskX"/>
+			<xsl:value-of select="$toTaskX"/>
 		</xsl:attribute>
 		<xsl:attribute name="y2">
-			<xsl:value-of select="$rightTaskY"/>
+			<xsl:value-of select="$toTaskY"/>
 		</xsl:attribute>
 	</line>
 
