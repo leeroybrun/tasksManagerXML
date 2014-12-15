@@ -4,7 +4,7 @@
 	<xsl:variable name="taskId">task_1</xsl:variable>
 	<xsl:variable name="taskManager" select="document('tasks.xml')/taskManager" />
 	<xsl:template match="/">
-		<html><head><link rel="stylesheet" href="../tasks.css" /></head><body>
+		<html><head><link rel="stylesheet" href="tasks.css" /></head><body>
 			<div class="wrapper">
 				<xsl:apply-templates select="$taskManager" />
 			</div>
@@ -69,7 +69,7 @@
 			</ul>
 		</xsl:if>
 	</xsl:template>
-
+	<xsl:template match="//tasks/task[@id != $taskId]" />
 	<xsl:template match="events"></xsl:template>
 	<xsl:template match="resources"></xsl:template>
 	<xsl:template match="locations"></xsl:template>

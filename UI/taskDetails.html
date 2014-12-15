@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 	<head>
-		<link rel="stylesheet" href="../tasks.css"/>
+		<link rel="stylesheet" href="tasks.css"/>
 	   	<script language="javascript">
 	   		function loadXMLDoc(filename){
 				if (window.ActiveXObject){
@@ -22,7 +22,7 @@
 			}
 
 	 		function displayResult(){
-				xml = loadXMLDoc("taskDetails.xml");
+				xml = loadXMLDoc("tasks.xml");
 				xsl = loadXMLDoc("taskDetails.xsl");
 
 				var taskId = getParameterByName('taskId') || 'task_1'; // On récupère le paramètre d'URL "taskId"

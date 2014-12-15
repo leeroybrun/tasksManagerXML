@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:variable name="taskManager" select="document('tasks.xml')/taskManager" />
 	<xsl:template match="/">
-		<html><head><link rel="stylesheet" href="../tasks.css" /></head><body>
+		<html><head><link rel="stylesheet" href="tasks.css" /></head><body>
 			<div class="wrapper">
 				 <xsl:apply-templates select="$taskManager" />
 			</div>
