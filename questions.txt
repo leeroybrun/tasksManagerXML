@@ -1,4 +1,0 @@
-Questions :
-
-	- Doit tourner sur tous les navigateurs ?
-	- Voir si la façon de faire pour afficher le détail de la tâche est optimal

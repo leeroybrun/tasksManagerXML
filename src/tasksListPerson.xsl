@@ -28,7 +28,7 @@
 		<xsl:if test="./assignedTo/@resource = $personId">
 			<xsl:element name="TR">
 				<TD><a>
-					<xsl:attribute name="href">../taskDetails/taskDetails.html?taskId=<xsl:value-of select="./@id"/></xsl:attribute>
+					<xsl:attribute name="href">taskDetails.html?taskId=<xsl:value-of select="./@id"/></xsl:attribute>
 					<xsl:value-of select="./description"/>
 				</a></TD>
 				<TD><xsl:value-of select="//resources/person[@id = current()/assignedTo/@resource]/@firstName"/></TD>

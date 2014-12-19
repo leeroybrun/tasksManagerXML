@@ -1,0 +1,74 @@
+<!ELEMENT taskManager (tasks,events,resources,locations,ui)>
+        <!ELEMENT tasks (task)*>
+        <!ELEMENT task (status,description,assignedTo,progress?,comments?,place?,priority?,duration?)>
+        <!ATTLIST task
+                id ID #REQUIRED>
+        <!ELEMENT status EMPTY>
+        <!ATTLIST status
+                value (NOT_STARTED|COMPLETED|IN_PROGRESS) #REQUIRED>
+        <!ELEMENT duration EMPTY>
+        <!ATTLIST duration
+                hour CDATA #REQUIRED>
+        <!ELEMENT priority EMPTY>
+        <!ATTLIST priority
+                value (HIGH|NORMAL|LOW) #REQUIRED>
+        <!ELEMENT description (#PCDATA)>
+        <!ELEMENT assignedTo EMPTY>
+        <!ATTLIST assignedTo
+                resource IDREF #REQUIRED>
+        <!ELEMENT progress EMPTY>
+        <!ATTLIST progress
+                value CDATA #REQUIRED>
+        <!ELEMENT comments (comment)*>
+        <!ELEMENT comment (#PCDATA)>
+        <!ATTLIST comment
+                from IDREF #REQUIRED>
+        <!ELEMENT place (#PCDATA)>
+        <!ATTLIST place
+                loc CDATA #REQUIRED>
+        <!ELEMENT events (event)*>
+        <!ELEMENT event (((from,to)|(from)|(to)), (operande|operator)+)>
+        <!ELEMENT operande (taskValue|now|value)>
+        <!ELEMENT from EMPTY>
+        <!ATTLIST from
+                    task IDREFS #REQUIRED>
+        <!ELEMENT to EMPTY>
+        <!ATTLIST to
+                task IDREFS #REQUIRED>
+        <!ELEMENT taskValue EMPTY>
+        <!ATTLIST taskValue
+                task IDREF #REQUIRED
+                element CDATA #REQUIRED>
+        <!ELEMENT now EMPTY>
+        <!ELEMENT value (#PCDATA)>
+        <!ELEMENT operator EMPTY>
+        <!ATTLIST operator
+                name (AND|OR|EQUAL|NOT_EQUAL|LESS_THAN|BIGGER_THAN) #REQUIRED>
+        <!ELEMENT resources (person)*>
+        <!ELEMENT person (#PCDATA)>
+        <!ATTLIST person
+                birthday CDATA #IMPLIED
+                firstName CDATA #REQUIRED
+                id ID #REQUIRED
+                lastName CDATA #REQUIRED>
+        <!ELEMENT locations (location)*>
+        <!ELEMENT location EMPTY>
+        <!ATTLIST location
+                id CDATA #REQUIRED
+                name CDATA #REQUIRED>
+        <!ELEMENT ui (rectangle|circle)*>
+        <!ELEMENT rectangle (position,size)>
+        <!ATTLIST rectangle
+                task IDREF #REQUIRED>
+        <!ELEMENT position EMPTY>
+        <!ATTLIST position
+                x CDATA #REQUIRED
+                y CDATA #REQUIRED>
+        <!ELEMENT size EMPTY>
+        <!ATTLIST size
+                height CDATA #REQUIRED
+                width CDATA #REQUIRED>
+        <!ELEMENT circle (position)>
+        <!ATTLIST circle
+                task IDREF #REQUIRED
+                radius CDATA #REQUIRED>

@@ -35,7 +35,7 @@
         </task>
         <task id="task_3">
             <status value="NOT_STARTED"/>
-            <description>Create DOC for Mr. Zyssman</description>
+            <description>Create DOC</description>
             <assignedTo resource="res_2"/>
             <progress value="4"/>
         </task>
@@ -96,23 +96,19 @@
     </locations>
     <ui>
         <rectangle task="task_0">
-            <position x="1200" y="20"/>
+            <position x="1000" y="50"/>
             <size height="100" width="270"/>
         </rectangle>
         <circle task="task_1" radius="70">
-            <position x="700" y="500"/>
+            <position x="500" y="550"/>
         </circle>
-        <!--<rectangle task="task_1">
-            <position x="700" y="600"/>
-            <size height="100" width="200"/>
-        </rectangle>-->
         <rectangle task="task_2">
-            <position x="300" y="200"/>
+            <position x="100" y="250"/>
             <size height="100" width="200"/>
         </rectangle>
         <rectangle task="task_3">
-            <position x="1100" y="400"/>
-            <size height="80" width="350"/>
+            <position x="900" y="450"/>
+            <size height="80" width="200"/>
         </rectangle>
     </ui>
 </taskManager>

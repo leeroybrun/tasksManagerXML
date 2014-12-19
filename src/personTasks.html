@@ -1,6 +1,6 @@
-<html>
+﻿<html>
 	<head>
-		<link rel="stylesheet" href="../tasks.css" />
+		<link rel="stylesheet" href="tasks.css" />
 	   	<script language="javascript">
 			function loadXML(filename){
 				if (window.ActiveXObject){
@@ -56,7 +56,7 @@
 	 		function displayPersons(){
 				xml = loadXML("tasks.xml");
 				personsFilterXsl = loadXML("personsFilter.xsl");
-				tasksListXsl = loadXML("tasksList.xsl");
+				tasksListXsl = loadXML("tasksListPerson.xsl");
 
 				transformXmlXslIntoNode(xml, personsFilterXsl, 'personsFilterWrapper');
 
@@ -66,12 +66,30 @@
 				// Si oui, on charge déjà sa liste de taches
 				if(personId) {
 					displayPersonTasks(personId);
+					
+					// Ensuite on sélectionne la personne dans la liste
+					selectPersonInList(personId);
 				}
 
 				// Lorsqu'on sélectionne une valeur dans la liste de personnes, on charge sa liste de taches
 				document.getElementById('personsFilter').onchange = function() {
 					displayPersonTasks(document.getElementById('personsFilter').value);
 				};
+			}
+			
+			// Sélectionne une personne donnée dans le "select" des personnes
+			function selectPersonInList(personId) {
+				var selectChilds = document.getElementById('personsFilter').childNodes;
+				
+				selectChilds[0].removeAttribute('selected'); // On déselectionne le premier "option"
+				
+				var found = false;
+				for (var i = 0; i < selectChilds.length && !found; i++) {
+					if(selectChilds[i] && selectChilds[i].tagName == 'OPTION' && selectChilds[i].getAttribute('value') == personId) {
+						found = true;
+						selectChilds[i].setAttribute('selected', 'selected');
+					}
+				}
 			}
 
 			// Fonction appelée lorsqu'on veut charger les taches d'une personne
@@ -93,9 +111,11 @@
 				transformXmlXslIntoNode(xml, tasksListXsl, 'tasksList');
 			}
 		</script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	</head>
 	<body onload="displayPersons()">
 		<div class="wrapper">
+			<p><a href="tasksList.xml">Retour à la liste des tâches</a></p>
 			<div id="personsFilterWrapper"></div>
 			<div id="tasksList"></div>
 		</div>
